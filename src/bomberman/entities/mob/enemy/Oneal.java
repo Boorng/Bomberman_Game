@@ -7,6 +7,7 @@ import javafx.scene.image.Image;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.stream.IntStream;
 
 public class Oneal extends Enemy {
 
@@ -68,13 +69,13 @@ public class Oneal extends Enemy {
             temp = (int) tmp;
         }
         setSpeed(temp);
-        for (int i = 1; i < BombermanGame.HEIGHT - 1; i ++) {
-            for (int j = 1; j < BombermanGame.WIDTH - 1; j ++) {
+        for (int i = 1; i < BombermanGame.HEIGHT - 1; i ++)
+            for (int j = 1; j < BombermanGame.WIDTH - 1; j++) {
                 graph[i * BombermanGame.WIDTH + j] = new ArrayList<>();
             }
-        }
 
-        for (int i = 1; i < BombermanGame.HEIGHT - 1; i ++) {
+        int i = 1;
+        while (i < BombermanGame.HEIGHT - 1) {
             for (int j = 1; j < BombermanGame.WIDTH - 1; j ++) {
                 if (canMove(j * Sprite.SCALED_SIZE, i * Sprite.SCALED_SIZE)) {
                     if (canMove((j - 1) * Sprite.SCALED_SIZE, i * Sprite.SCALED_SIZE)) {
@@ -102,6 +103,7 @@ public class Oneal extends Enemy {
                     }
                 }
             }
+            i++;
         }
 
         if (BombermanGame.getMobs().get(0) instanceof Bomber) {
@@ -130,18 +132,15 @@ public class Oneal extends Enemy {
         }
     }
 
-    public void BFS(int s)
-    {
-        for (int i = 0; i < MAX; i++)
-        {
+    public void BFS(int s) {
+        IntStream.range(0, MAX).forEachOrdered(i -> {
             visited[i] = false;
             path[i] = -1;
-        }
+        });
         Queue<Integer> q = new LinkedList<>();
         visited[s] = true;
         q.add(s);
-        while (!q.isEmpty())
-        {
+        while (!q.isEmpty()) {
             int u = q.poll();
             for (int i = 0; i < graph[u].size(); i++)
             {

@@ -78,8 +78,9 @@ public abstract class Mob extends AnimatedEntity {
     public abstract void move();
 
     public boolean canMove(int x, int y) {
-        if (BombermanGame.entityAt(x, y) == '#') {
-            return false;
+        switch (BombermanGame.entityAt(x, y)) {
+            case '#':
+                return false;
         }
         if (BombermanGame.entityAt(x, y) == '*' && !isMovethruBrick()) {
             return false;
@@ -89,11 +90,12 @@ public abstract class Mob extends AnimatedEntity {
     public abstract void kill();
 
     public boolean standOnObject(Entity b) {
-        return (((b.getX() / Sprite.SCALED_SIZE) == (x / Sprite.SCALED_SIZE)
+        if ((((b.getX() / Sprite.SCALED_SIZE) == (x / Sprite.SCALED_SIZE)
                 || (b.getX() / Sprite.SCALED_SIZE) == ((x + getFat() - 1) / Sprite.SCALED_SIZE))
                 && ((b.getY() / Sprite.SCALED_SIZE) == ((y + Sprite.SCALED_SIZE / 8) / Sprite.SCALED_SIZE)
                 || (b.getY() / Sprite.SCALED_SIZE) == ((y + Sprite.SCALED_SIZE - 1) / Sprite.SCALED_SIZE))
-        );
+        )) return true;
+        else return false;
     }
 
     public void randomMove() {

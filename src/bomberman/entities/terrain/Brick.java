@@ -35,9 +35,7 @@ public class Brick extends AnimatedEntity {
     }
 
     public void kill() {
-        if (getBreakTime() == -1 ) {
-            setBreakTime(System.currentTimeMillis());
-        }
+        if (getBreakTime() == -1 ) setBreakTime(System.currentTimeMillis());
         img = Sprite.movingSprite(Sprite.brick_exploded, Sprite.brick_exploded1, Sprite.brick_exploded2,
                 (double) (System.currentTimeMillis() - getBreakTime()), 500).getFxImage();
     }

@@ -9,7 +9,7 @@ import javafx.scene.image.Image;
 public class Bomb extends AnimatedEntity {
     protected long startTime;
     protected long aliveTime;
-    private int power;
+    private final int power;
 
     public Bomb(int x, int y, Image img) {
         super(x, y, img);
@@ -36,81 +36,93 @@ public class Bomb extends AnimatedEntity {
         tx = x;
         ty = y;
         d = 0;
-        while (d < power
+        if (d < power
                 && BombermanGame.entityAt(tx - Sprite.SCALED_SIZE, ty) != '#') {
-            d++;
-            tx -= Sprite.SCALED_SIZE;
-            if (BombermanGame.entityAt(tx, ty) == '*') {
-                BombermanGame.addBomb(new Flame(tx, ty, Sprite.explosion_horizontal, Sprite.explosion_horizontal1, Sprite.explosion_horizontal2));
-                break;
-            } else {
-                if (d == power
-                        || BombermanGame.entityAt(tx - Sprite.SCALED_SIZE, ty) == '#') {
-                    BombermanGame.addBomb(new Flame(tx, ty, Sprite.explosion_horizontal_left_last, Sprite.explosion_horizontal_left_last1, Sprite.explosion_horizontal_left_last2));
-                } else {
+            do {
+                d++;
+                tx -= Sprite.SCALED_SIZE;
+                if (BombermanGame.entityAt(tx, ty) == '*') {
                     BombermanGame.addBomb(new Flame(tx, ty, Sprite.explosion_horizontal, Sprite.explosion_horizontal1, Sprite.explosion_horizontal2));
+                    break;
+                } else {
+                    if (d == power
+                            || BombermanGame.entityAt(tx - Sprite.SCALED_SIZE, ty) == '#') {
+                        BombermanGame.addBomb(new Flame(tx, ty, Sprite.explosion_horizontal_left_last, Sprite.explosion_horizontal_left_last1, Sprite.explosion_horizontal_left_last2));
+                    } else {
+                        BombermanGame.addBomb(new Flame(tx, ty, Sprite.explosion_horizontal, Sprite.explosion_horizontal1, Sprite.explosion_horizontal2));
+                    }
                 }
-            }
+            } while (d < power
+                    && BombermanGame.entityAt(tx - Sprite.SCALED_SIZE, ty) != '#');
         }
 
         tx = x + Sprite.SCALED_SIZE;
         ty = y;
         d = 0;
-        while (d < power
+        if (d < power
                 && BombermanGame.entityAt(tx, ty) != '#') {
-            d++;
-            if (BombermanGame.entityAt(tx, ty) == '*') {
-                BombermanGame.addBomb(new Flame(tx, ty, Sprite.explosion_horizontal, Sprite.explosion_horizontal1, Sprite.explosion_horizontal2));
-                break;
-            } else {
-                if (d == power
-                        || BombermanGame.entityAt(tx + Sprite.SCALED_SIZE, ty) == '#') {
-                    BombermanGame.addBomb(new Flame(tx, ty, Sprite.explosion_horizontal_right_last, Sprite.explosion_horizontal_right_last1, Sprite.explosion_horizontal_right_last2));
-                } else {
+            do {
+                d++;
+                if (BombermanGame.entityAt(tx, ty) == '*') {
                     BombermanGame.addBomb(new Flame(tx, ty, Sprite.explosion_horizontal, Sprite.explosion_horizontal1, Sprite.explosion_horizontal2));
+                    break;
+                } else {
+                    if (d == power
+                            || BombermanGame.entityAt(tx + Sprite.SCALED_SIZE, ty) == '#') {
+                        BombermanGame.addBomb(new Flame(tx, ty, Sprite.explosion_horizontal_right_last, Sprite.explosion_horizontal_right_last1, Sprite.explosion_horizontal_right_last2));
+                    } else {
+                        BombermanGame.addBomb(new Flame(tx, ty, Sprite.explosion_horizontal, Sprite.explosion_horizontal1, Sprite.explosion_horizontal2));
+                    }
                 }
-            }
-            tx += Sprite.SCALED_SIZE;
+                tx += Sprite.SCALED_SIZE;
+            } while (d < power
+                    && BombermanGame.entityAt(tx, ty) != '#');
         }
 
         tx = x;
         ty = y + Sprite.SCALED_SIZE;
         d = 0;
-        while (d < power
+        if (d < power
                 && BombermanGame.entityAt(tx, ty) != '#') {
-            d++;
-            if (BombermanGame.entityAt(tx, ty) == '*') {
-                BombermanGame.addBomb(new Flame(tx, ty, Sprite.explosion_vertical, Sprite.explosion_vertical1, Sprite.explosion_vertical2));
-                break;
-            } else {
-                if (d == power
-                        || BombermanGame.entityAt(tx, ty + Sprite.SCALED_SIZE) == '#') {
-                    BombermanGame.addBomb(new Flame(tx, ty, Sprite.explosion_vertical_down_last, Sprite.explosion_vertical_down_last1, Sprite.explosion_vertical_down_last2));
-                } else {
+            do {
+                d++;
+                if (BombermanGame.entityAt(tx, ty) == '*') {
                     BombermanGame.addBomb(new Flame(tx, ty, Sprite.explosion_vertical, Sprite.explosion_vertical1, Sprite.explosion_vertical2));
+                    break;
+                } else {
+                    if (d == power
+                            || BombermanGame.entityAt(tx, ty + Sprite.SCALED_SIZE) == '#') {
+                        BombermanGame.addBomb(new Flame(tx, ty, Sprite.explosion_vertical_down_last, Sprite.explosion_vertical_down_last1, Sprite.explosion_vertical_down_last2));
+                    } else {
+                        BombermanGame.addBomb(new Flame(tx, ty, Sprite.explosion_vertical, Sprite.explosion_vertical1, Sprite.explosion_vertical2));
+                    }
                 }
-            }
-            ty += Sprite.SCALED_SIZE;
+                ty += Sprite.SCALED_SIZE;
+            } while (d < power
+                    && BombermanGame.entityAt(tx, ty) != '#');
         }
 
         tx = x;
         ty = y;
         d = 0;
-        while (d < power
+        if (d < power
                 && BombermanGame.entityAt(tx, ty - Sprite.SCALED_SIZE) != '#') {
-            d++;
-            ty -= Sprite.SCALED_SIZE;
-            if (BombermanGame.entityAt(tx, ty) == '*') {
-                BombermanGame.addBomb(new Flame(tx, ty, Sprite.explosion_vertical, Sprite.explosion_vertical1, Sprite.explosion_vertical2));
-                break;
-            } else {
-                if (d == power
-                        || BombermanGame.entityAt(tx, ty - Sprite.SCALED_SIZE) == '#') {
-                    BombermanGame.addBomb(new Flame(tx, ty, Sprite.explosion_vertical_top_last, Sprite.explosion_vertical_top_last1, Sprite.explosion_vertical_top_last2));
-                } else {
+            do {
+                d++;
+                ty -= Sprite.SCALED_SIZE;
+                if (BombermanGame.entityAt(tx, ty) == '*') {
                     BombermanGame.addBomb(new Flame(tx, ty, Sprite.explosion_vertical, Sprite.explosion_vertical1, Sprite.explosion_vertical2));
+                    break;
+                } else {
+                    if (d == power
+                            || BombermanGame.entityAt(tx, ty - Sprite.SCALED_SIZE) == '#') {
+                        BombermanGame.addBomb(new Flame(tx, ty, Sprite.explosion_vertical_top_last, Sprite.explosion_vertical_top_last1, Sprite.explosion_vertical_top_last2));
+                    } else {
+                        BombermanGame.addBomb(new Flame(tx, ty, Sprite.explosion_vertical, Sprite.explosion_vertical1, Sprite.explosion_vertical2));
+                    }
                 }
-            }
+            } while (d < power
+                    && BombermanGame.entityAt(tx, ty - Sprite.SCALED_SIZE) != '#');
         }
     }
 

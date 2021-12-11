@@ -51,15 +51,12 @@ public class Kondoria extends Enemy {
                     break;
                 }
             }
-            if (!visible) {
-                img = Sprite.none.getFxImage();
-            }
+            if (!visible) img = Sprite.none.getFxImage();
         }
     }
 
     public void play() {
-        double tmp = Math.random() * 10;
-        visible = !(tmp <= 2);
+        visible = !(Math.random() * 10 <= 2);
         randomMove();
     }
 }

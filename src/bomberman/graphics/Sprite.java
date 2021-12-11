@@ -182,11 +182,10 @@ public class Sprite {
 	}
 
 	private void load() {
-		for (int y = 0; y < SIZE; y++) {
+		for (int y = 0; y < SIZE; y++)
 			for (int x = 0; x < SIZE; x++) {
 				_pixels[x + y * SIZE] = _sheet._pixels[(x + _x) + (y + _y) * _sheet.SIZE];
 			}
-		}
 	}
 
 	public static Sprite movingSprite(Sprite normal, Sprite x1, Sprite x2, double animate, double time) {
@@ -212,7 +211,8 @@ public class Sprite {
 	public Image getFxImage() {
 		WritableImage wr = new WritableImage(SIZE, SIZE);
 		PixelWriter pw = wr.getPixelWriter();
-		for (int x = 0; x < SIZE; x++) {
+		int x = 0;
+		while (x < SIZE) {
 			for (int y = 0; y < SIZE; y++) {
 				if ( _pixels[x + y * SIZE] == TRANSPARENT_COLOR) {
 					pw.setArgb(x, y, 0);
@@ -221,6 +221,7 @@ public class Sprite {
 					pw.setArgb(x, y, _pixels[x + y * SIZE]);
 				}
 			}
+			x++;
 		}
 		Image input = new ImageView(wr).getImage();
 		return resample(input);
@@ -239,15 +240,16 @@ public class Sprite {
 		PixelReader reader = input.getPixelReader();
 		PixelWriter writer = output.getPixelWriter();
 
-		for (int y = 0; y < H; y++) {
-			for (int x = 0; x < W; x++) {
+		int y = 0;
+		while (y < H) {
+			for (int x = W - 1; x >= 0; x--) {
 				final int argb = reader.getArgb(x, y);
-				for (int dy = 0; dy < S; dy++) {
+				for (int dy = 0; dy < S; dy++)
 					for (int dx = 0; dx < S; dx++) {
 						writer.setArgb(x * S + dx, y * S + dy, argb);
 					}
-				}
 			}
+			y++;
 		}
 
 		return output;

@@ -12,6 +12,7 @@ public class Flame extends Bomb {
     private final Sprite flame1;
     private final Sprite flame2;
     private final Sprite flame3;
+
     public Flame(int x, int y, Sprite flame1, Sprite flame2, Sprite flame3) {
         super(x, y, flame1.getFxImage());
         this.flame1 = flame1;
@@ -26,33 +27,33 @@ public class Flame extends Bomb {
         aliveTime = System.currentTimeMillis() - startTime;
         if (aliveTime >= 500) {
             remove = true;
-        }
-        else {
+        } else {
             List<Brick> bricks = BombermanGame.getBricks();
-            bricks.forEach(b -> {
-                if (b.getX() == x && b.getY() == y) {
+            for (Brick brick : bricks) {
+                if (brick.getX() == x && brick.getY() == y) {
                     this.setRemove(true);
-                    b.setRemove(true);
+                    brick.setRemove(true);
                 }
-            });
+            }
 
             List<Mob> mobs = BombermanGame.getMobs();
-            mobs.forEach(m -> {
+            for (Mob m : mobs) {
                 if (m.standOnObject(this)) {
                     m.setRemove(true);
                     if (m instanceof Bomber) {
                         SoundEffect.death.play();
                     }
                 }
-            });
+            }
 
             List<Bomb> bombs = BombermanGame.getBombs();
-            bombs.forEach(b -> {
+            for (Bomb b : bombs) {
                 if (!(b instanceof Flame) && b.getX() == x && b.getY() == y) {
                     b.setRemove(true);
                 }
-            });
+            }
         }
+
         img = Sprite.movingSprite(flame1, flame2, flame3, aliveTime, 500).getFxImage();
     }
 }

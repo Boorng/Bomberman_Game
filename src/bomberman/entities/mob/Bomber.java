@@ -4,12 +4,11 @@ import bomberman.BombermanGame;
 import bomberman.entities.bomb.Bomb;
 import bomberman.entities.powerup.*;
 import bomberman.graphics.Sprite;
-import bomberman.musics.SoundEffect;
 import javafx.scene.image.Image;
 
 public class Bomber extends Mob {
-    Image stop = Sprite.player_down.getFxImage();
     private int animate = 0;
+    Image stop = Sprite.player_down.getFxImage();
 
     public Bomber(int x, int y, Image img) {
         super(x, y, img);
@@ -33,7 +32,7 @@ public class Bomber extends Mob {
                 }
             }
             play();
-            SoundEffect.run.play();
+
             switch (getDirection()) {
                 case 0: {
                     if (canMove(x + getSpeed() + getFat() - 1, y + Sprite.SCALED_SIZE / 8)
@@ -47,8 +46,7 @@ public class Bomber extends Mob {
                     }
                     setDirection(-1);
                     break;
-                }
-                case 1: {
+                } case 1: {
                     if (canMove(x - getSpeed(), y + Sprite.SCALED_SIZE / 8)
                             && canMove(x - getSpeed(), y + Sprite.SCALED_SIZE - 1)) {
                         x -= getSpeed();
@@ -60,8 +58,7 @@ public class Bomber extends Mob {
                     }
                     setDirection(-1);
                     break;
-                }
-                case 2: {
+                } case 2: {
                     if (canMove(x, y - getSpeed() + Sprite.SCALED_SIZE / 8)
                             && canMove(x + getFat() - 1, y - getSpeed() + Sprite.SCALED_SIZE / 8)) {
                         y -= getSpeed();
@@ -73,8 +70,7 @@ public class Bomber extends Mob {
                     }
                     setDirection(-1);
                     break;
-                }
-                case 3: {
+                } case 3: {
                     if (canMove(x, y + Sprite.SCALED_SIZE + getSpeed() - 1)
                             && canMove(x + getFat() - 1, y + Sprite.SCALED_SIZE + getSpeed() - 1)) {
                         y += getSpeed();
@@ -86,9 +82,7 @@ public class Bomber extends Mob {
                     }
                     setDirection(-1);
                     break;
-                }
-                default: {
-                    SoundEffect.run.stop();
+                } default: {
                     setDirection(-1);
                 }
             }
@@ -116,7 +110,8 @@ public class Bomber extends Mob {
         }
 
         for (int i = 0; i < BombermanGame.getMobs().size(); i++) {
-            if (!(BombermanGame.getMobs().get(i) instanceof Bomber) && !(BombermanGame.getMobs().get(i).isRemoved())) {
+            boolean checkType = BombermanGame.getMobs().get(i) instanceof Bomber;
+            if (!checkType && !(BombermanGame.getMobs().get(i).isRemoved())) {
                 Mob m = BombermanGame.getMobs().get(i);
                 if (standOnObject(m)) {
                     this.setRemove(true);
@@ -150,6 +145,7 @@ public class Bomber extends Mob {
         if (BombermanGame.getKey().contains("SPACE")) {
             int bx = x;
             int by = y;
+
             if (x % Sprite.SCALED_SIZE > Sprite.SCALED_SIZE / 2) {
                 bx = x + Sprite.SCALED_SIZE;
             }
@@ -164,11 +160,11 @@ public class Bomber extends Mob {
 
     @Override
     public void kill() {
+        img = Sprite.movingSprite(Sprite.player_dead1, Sprite.player_dead2, Sprite.player_dead3,
+                System.currentTimeMillis() - getDeadTime(), 1000).getFxImage();
         if (getDeadTime() == -1) {
             setDeadTime(System.currentTimeMillis());
         }
-        img = Sprite.movingSprite(Sprite.player_dead1, Sprite.player_dead2, Sprite.player_dead3,
-                System.currentTimeMillis() - getDeadTime(), 1000).getFxImage();
     }
 
 }

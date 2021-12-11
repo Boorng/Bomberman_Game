@@ -127,18 +127,14 @@ public class BombermanGame extends Application {
 
     @Override
     public void start(Stage stage) {
-        // Creat Canvas
         canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
         gc = canvas.getGraphicsContext2D();
 
-        // Creat root container
         Group root = new Group();
         root.getChildren().add(canvas);
 
-        // Creat scene
         Scene scene = new Scene(root, Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
 
-        // Add scene vao stage
         stage.setScene(scene);
         stage.show();
 
@@ -337,7 +333,8 @@ public class BombermanGame extends Application {
         setSpeed(2);
         creatmapfromfile();
 
-        for (int i = 0; i < HEIGHT; i++) {
+        int i = 0;
+        while (i < HEIGHT) {
             for (int j = 0; j < WIDTH; j++) {
                 Entity e;
 
@@ -424,6 +421,7 @@ public class BombermanGame extends Application {
                     }
                 }
             }
+            i++;
         }
     }
 }
